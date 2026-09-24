@@ -6,6 +6,8 @@ Consolidação da Single Page Application da organização Conexão Solidária c
 
 Esta etapa utiliza uma cópia independente do projeto anterior. O histórico da Experiência III foi preservado, enquanto este repositório recebe as melhorias de qualidade e produção. A estratégia de branches, commits e releases está documentada em [`VERSIONAMENTO.md`](VERSIONAMENTO.md).
 
+O histórico das entregas e versões pode ser consultado em [`CHANGELOG.md`](CHANGELOG.md). A versão atual de preparação é `v0.4.0-alpha.1`.
+
 ## Estrutura
 
 ```text
