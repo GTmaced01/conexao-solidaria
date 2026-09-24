@@ -42,6 +42,13 @@
 - **Desempenho:** numa simulação de 1,6 Mbps e 150 ms de latência, o carregamento completo ocorreu entre 751 e 764 ms. A economia estimada em relação ao WebP anterior é de 0,27 a 0,33 segundo.
 - **Estabilidade:** largura e altura intrínsecas foram corrigidas para 1200 × 569, evitando mudança de layout durante o carregamento.
 
+## 8. Produção na Vercel
+
+- **Build remoto:** `npm ci` auditou 47 dependências sem vulnerabilidades e o Vite concluiu a geração da pasta `dist`.
+- **Disponibilidade:** o domínio de produção e os recursos JavaScript, CSS e AVIF responderam com HTTP 200 e tipos MIME corretos.
+- **Plataforma:** o deployment foi confirmado no estado `READY`, com alias de produção ativo e sem erros de execução registrados.
+- **Limitação do teste:** o navegador automatizado do ambiente não recebeu acesso externo; o mesmo artefato já havia passado pela verificação funcional completa no preview local antes do deploy.
+
 ## Evidências finais
 
 - arquivos JavaScript aprovados na verificação de sintaxe;
@@ -55,4 +62,5 @@
 - todos os pares da auditoria de contraste aprovados;
 - build de produção minificado e carregamento local da IMask aprovados;
 - variantes responsivas AVIF selecionadas corretamente em três viewports;
+- deployment de produção disponível e recursos estáticos verificados;
 - nenhuma falha de console nos testes finais com os recursos disponíveis.

@@ -1,0 +1,50 @@
+name: Deploy de produção na Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: vercel-production
+  cancel-in-progress: false
+
+jobs:
+  validar-e-publicar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - name: Obter o código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Validar contraste
+        run: npm run audit:contrast
+
+      - name: Gerar build local
+        run: npm run build
+
+      - name: Instalar Vercel CLI
+        run: npm install --global vercel@60.0.0
+
+      - name: Obter configurações de produção
+        run: vercel pull --yes --environment=production
+
+      - name: Gerar artefato da Vercel
+        run: vercel build --prod
+
+      - name: Publicar artefato validado
+        run: vercel deploy --prebuilt --prod
