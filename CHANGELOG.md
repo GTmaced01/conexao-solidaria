@@ -13,6 +13,9 @@ As alterações relevantes deste projeto são documentadas neste arquivo. A vers
 - variantes responsivas da imagem principal em AVIF, WebP e JPEG;
 - script reproduzível de otimização de imagens com Sharp;
 - documentação das métricas de imagem e carregamento.
+- configuração explícita de produção para a Vercel;
+- workflow de CI/CD preparado para GitHub Actions;
+- documentação do deployment e do procedimento de recuperação.
 
 ### Alterado
 
@@ -20,6 +23,7 @@ As alterações relevantes deste projeto são documentadas neste arquivo. A vers
 - inicialização local migrada para o servidor de desenvolvimento do Vite;
 - dependência da IMask removida do CDN.
 - imagem principal configurada com `picture`, `srcset`, `sizes` e prioridade adequada ao LCP.
+- aplicação publicada no projeto `medeiros-dev1/conexao-solidaria` com alias estável.
 
 ## [0.4.0-alpha.1] - 2026-09-23
 

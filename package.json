@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "audit:contrast": "node scripts/auditar-contraste.mjs",
-    "optimize:images": "node scripts/otimizar-imagens.mjs"
+    "optimize:images": "node scripts/otimizar-imagens.mjs",
+    "export:source": "node scripts/exportar-codigo-fonte.mjs"
   },
   "dependencies": {
     "imask": "^7.6.1"

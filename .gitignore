@@ -9,4 +9,6 @@ coverage/
 .env.*
 !.env.example
 .vite/
+.vercel/
 .npm-cache/
+CODIGO-FONTE-FINAL.txt

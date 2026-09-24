@@ -4,6 +4,8 @@
 
 Conexão Solidária é uma Single Page Application para uma organização do terceiro setor. A interface apresenta projetos sociais e permite que doadores ou voluntários registrem interesse em colaborar. Esta quarta experiência consolida a aplicação com práticas profissionais de versionamento, documentação, acessibilidade, otimização e preparação para produção.
 
+**Produção:** https://conexao-solidaria-virid.vercel.app
+
 O projeto é uma cópia independente da Experiência III, preservando integralmente a entrega anterior.
 
 ## Funcionalidades
@@ -56,6 +58,7 @@ Projeto - Conexao Solidaria/
 |-- vite.config.js
 |-- abrir-projeto.bat
 |-- BUILD.md
+|-- DEPLOY.md
 |-- OTIMIZACAO-IMAGENS.md
 |-- CHANGELOG.md
 |-- TESTES.md
@@ -125,7 +128,7 @@ O projeto usa uma adaptação do GitFlow:
 - `release/*`: preparação para produção;
 - `hotfix/*`: correções urgentes.
 
-As mensagens seguem Conventional Commits, incluindo `feat`, `fix`, `docs`, `test`, `perf`, `refactor` e `chore`. Consulte [VERSIONAMENTO.md](VERSIONAMENTO.md) para o fluxo completo e [CHANGELOG.md](CHANGELOG.md) para o histórico. A versão atual de preparação é `v0.4.0-alpha.1`.
+As mensagens seguem Conventional Commits, incluindo `feat`, `fix`, `docs`, `test`, `perf`, `refactor` e `chore`. Consulte [VERSIONAMENTO.md](VERSIONAMENTO.md) para o fluxo completo e [CHANGELOG.md](CHANGELOG.md) para o histórico.
 
 ## Testes
 
@@ -151,7 +154,7 @@ A aplicação utiliza HTML semântico, link de salto, navegação completa por t
 - os dados permanecem apenas no navegador do utilizador;
 - não há autenticação ou integração com back-end;
 - o repositório remoto próprio ainda será criado;
-- a publicação em um endereço público será realizada na etapa de deploy.
+- o workflow de CI/CD será ativado quando o código for enviado ao repositório remoto e os segredos da Vercel forem cadastrados.
 
 ## Documentação complementar
 
@@ -162,4 +165,5 @@ A aplicação utiliza HTML semântico, link de salto, navegação completa por t
 - [Auditoria de contraste](CONTRASTE.md)
 - [Build e minificação](BUILD.md)
 - [Otimização de imagens e desempenho](OTIMIZACAO-IMAGENS.md)
+- [Publicação e CI/CD](DEPLOY.md)
 - [Relatório da Experiência III](RELATORIO-EXPERIENCIA-PRATICA-III.md)
