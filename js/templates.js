@@ -1,5 +1,8 @@
 import { projetos } from "./dados.js";
 
+const imagemVoluntariosWebp = new URL("../imagens/voluntarios.webp", import.meta.url).href;
+const imagemVoluntariosJpg = new URL("../imagens/voluntarios.jpg", import.meta.url).href;
+
 function cartaoProjeto(projeto) {
     return `
         <article class="info-card" aria-labelledby="titulo-cartao-${projeto.id}">
@@ -25,8 +28,8 @@ export function templateInicio() {
                 </div>
                 <figure class="hero-media">
                     <picture>
-                        <source srcset="../imagens/voluntarios.webp" type="image/webp">
-                        <img src="../imagens/voluntarios.jpg" alt="Voluntários organizando alimentos para doação" width="1200" height="800">
+                        <source srcset="${imagemVoluntariosWebp}" type="image/webp">
+                        <img src="${imagemVoluntariosJpg}" alt="Voluntários organizando alimentos para doação" width="1200" height="800">
                     </picture>
                     <figcaption>Voluntários preparando doações para a comunidade.</figcaption>
                 </figure>
