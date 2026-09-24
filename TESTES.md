@@ -35,6 +35,13 @@
 - **Validação:** troca manual, `aria-pressed`, nome acessível, preferência automática do sistema e persistência após recarregar foram testados no Chrome.
 - **Contraste:** 18 pares foram verificados pelo script `scripts/auditar-contraste.mjs`; todos atenderam aos limites de 4,5:1 para textos ou 3:1 para componentes essenciais.
 
+## 7. Imagem responsiva e desempenho
+
+- **Validação visual:** a imagem JPEG otimizada foi comparada com a original, preservando enquadramento e nitidez aparente.
+- **Seleção responsiva:** em viewport de 390 px, o Chrome escolheu o AVIF de 480 px; em 768 e 1440 px, escolheu o AVIF de 800 px.
+- **Desempenho:** numa simulação de 1,6 Mbps e 150 ms de latência, o carregamento completo ocorreu entre 751 e 764 ms. A economia estimada em relação ao WebP anterior é de 0,27 a 0,33 segundo.
+- **Estabilidade:** largura e altura intrínsecas foram corrigidas para 1200 × 569, evitando mudança de layout durante o carregamento.
+
 ## Evidências finais
 
 - arquivos JavaScript aprovados na verificação de sintaxe;
@@ -47,4 +54,5 @@
 - modo escuro persistente e responsivo aprovado;
 - todos os pares da auditoria de contraste aprovados;
 - build de produção minificado e carregamento local da IMask aprovados;
+- variantes responsivas AVIF selecionadas corretamente em três viewports;
 - nenhuma falha de console nos testes finais com os recursos disponíveis.

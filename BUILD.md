@@ -10,6 +10,7 @@ A dependência IMask foi removida do CDN, instalada localmente e separada num ar
 
 ```text
 npm install
+npm run optimize:images
 npm run dev
 npm run build
 npm run preview
@@ -28,7 +29,7 @@ As medições comparam os arquivos-base próprios antes e depois da minificaçã
 | JavaScript próprio | 19.297 bytes | 14.061 bytes | 27,1% |
 | **Total dos arquivos-base** | **49.193 bytes** | **38.905 bytes** | **20,9%** |
 
-O pacote `vendor` local da IMask possui 57.485 bytes (15.730 bytes comprimidos por gzip). As imagens são apenas copiadas e versionadas nesta etapa; a compressão delas será tratada separadamente.
+O pacote `vendor` local da IMask possui 57.485 bytes (15.730 bytes comprimidos por gzip). As imagens responsivas são geradas pelo Sharp e suas métricas estão em `OTIMIZACAO-IMAGENS.md`.
 
 ## Decisões e correções
 

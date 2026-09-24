@@ -1,7 +1,18 @@
 import { projetos } from "./dados.js";
 
-const imagemVoluntariosWebp = new URL("../imagens/voluntarios.webp", import.meta.url).href;
-const imagemVoluntariosJpg = new URL("../imagens/voluntarios.jpg", import.meta.url).href;
+const imagensVoluntarios = {
+    avif480: new URL("../imagens/otimizadas/voluntarios-480.avif", import.meta.url).href,
+    avif800: new URL("../imagens/otimizadas/voluntarios-800.avif", import.meta.url).href,
+    avif1200: new URL("../imagens/otimizadas/voluntarios-1200.avif", import.meta.url).href,
+    webp480: new URL("../imagens/otimizadas/voluntarios-480.webp", import.meta.url).href,
+    webp800: new URL("../imagens/otimizadas/voluntarios-800.webp", import.meta.url).href,
+    webp1200: new URL("../imagens/otimizadas/voluntarios-1200.webp", import.meta.url).href,
+    jpg480: new URL("../imagens/otimizadas/voluntarios-480.jpg", import.meta.url).href,
+    jpg800: new URL("../imagens/otimizadas/voluntarios-800.jpg", import.meta.url).href,
+    jpg1200: new URL("../imagens/otimizadas/voluntarios-1200.jpg", import.meta.url).href
+};
+
+const tamanhosImagemHero = "(max-width: 576px) calc(100vw - 3rem), (max-width: 992px) calc(100vw - 5rem), 640px";
 
 function cartaoProjeto(projeto) {
     return `
@@ -28,8 +39,24 @@ export function templateInicio() {
                 </div>
                 <figure class="hero-media">
                     <picture>
-                        <source srcset="${imagemVoluntariosWebp}" type="image/webp">
-                        <img src="${imagemVoluntariosJpg}" alt="Voluntários organizando alimentos para doação" width="1200" height="800">
+                        <source
+                            type="image/avif"
+                            srcset="${imagensVoluntarios.avif480} 480w, ${imagensVoluntarios.avif800} 800w, ${imagensVoluntarios.avif1200} 1200w"
+                            sizes="${tamanhosImagemHero}">
+                        <source
+                            type="image/webp"
+                            srcset="${imagensVoluntarios.webp480} 480w, ${imagensVoluntarios.webp800} 800w, ${imagensVoluntarios.webp1200} 1200w"
+                            sizes="${tamanhosImagemHero}">
+                        <img
+                            src="${imagensVoluntarios.jpg800}"
+                            srcset="${imagensVoluntarios.jpg480} 480w, ${imagensVoluntarios.jpg800} 800w, ${imagensVoluntarios.jpg1200} 1200w"
+                            sizes="${tamanhosImagemHero}"
+                            alt="Voluntários organizando alimentos para doação"
+                            width="1200"
+                            height="569"
+                            loading="eager"
+                            fetchpriority="high"
+                            decoding="async">
                     </picture>
                     <figcaption>Voluntários preparando doações para a comunidade.</figcaption>
                 </figure>
