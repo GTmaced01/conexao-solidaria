@@ -21,7 +21,7 @@
             </a>
 
             <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
-                <span class="sr-only">Abrir menu principal</span>
+                <span class="sr-only" id="menu-toggle-label">Abrir menu principal</span>
                 <span class="menu-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
             </button>
 
@@ -35,7 +35,7 @@
         </div>
     </header>
 
-    <main id="app" tabindex="-1"></main>
+    <main id="app" tabindex="-1" aria-busy="false"></main>
 
     <footer class="site-footer">
         <div class="container footer-layout">
@@ -44,6 +44,6 @@
         </div>
     </footer>
 
-    <div class="sr-only" id="route-status" aria-live="polite" aria-atomic="true"></div>
+    <div class="sr-only" id="route-status" role="status"></div>
 </body>
 </html>

@@ -87,7 +87,10 @@ function limparValidacao(formulario) {
         campo.classList.remove("is-valid", "is-invalid");
         campo.removeAttribute("aria-invalid");
     });
-    formulario.querySelectorAll(".field-feedback").forEach(feedback => feedback.remove());
+    formulario.querySelectorAll(".field-feedback").forEach(feedback => {
+        feedback.textContent = "";
+        feedback.className = "field-feedback";
+    });
 }
 
 export function iniciarFormulario() {

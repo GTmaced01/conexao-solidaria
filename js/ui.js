@@ -9,6 +9,7 @@ export function atualizarNavegacao(rota) {
     const botao = document.querySelector(".menu-toggle");
     menu.classList.remove("is-open");
     botao.setAttribute("aria-expanded", "false");
+    botao.querySelector(".sr-only").textContent = "Abrir menu principal";
 }
 
 export function anunciarRota(titulo) {
@@ -23,5 +24,8 @@ export function iniciarMenuResponsivo() {
         const aberto = botao.getAttribute("aria-expanded") === "true";
         botao.setAttribute("aria-expanded", String(!aberto));
         menu.classList.toggle("is-open", !aberto);
+        botao.querySelector(".sr-only").textContent = aberto
+            ? "Abrir menu principal"
+            : "Fechar menu principal";
     });
 }

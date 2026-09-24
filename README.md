@@ -130,7 +130,7 @@ Os problemas encontrados e suas correções estão descritos em [TESTES.md](TEST
 
 ## Acessibilidade
 
-A aplicação já utiliza HTML semântico, link de salto, foco visível, associação entre rótulos e campos, `aria-current`, `aria-expanded`, `aria-invalid`, `aria-describedby` e regiões `aria-live`. A auditoria completa de conformidade WCAG 2.1 nível AA será registrada na etapa específica da Experiência IV.
+A aplicação utiliza HTML semântico, link de salto, associação entre rótulos e campos, `aria-current`, `aria-expanded`, `aria-busy`, `aria-invalid`, `aria-describedby` e regiões de status. As decisões e os critérios WCAG 2.1 relacionados estão documentados em [ACESSIBILIDADE.md](ACESSIBILIDADE.md). A navegação por teclado e o contraste serão aprofundados nas próximas etapas.
 
 ## Limitações atuais
 

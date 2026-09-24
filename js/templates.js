@@ -2,9 +2,9 @@ import { projetos } from "./dados.js";
 
 function cartaoProjeto(projeto) {
     return `
-        <article class="info-card">
+        <article class="info-card" aria-labelledby="titulo-cartao-${projeto.id}">
             <span class="card-number">${projeto.numero} · ${projeto.status}</span>
-            <h3>${projeto.titulo}</h3>
+            <h3 id="titulo-cartao-${projeto.id}">${projeto.titulo}</h3>
             <p>${projeto.resumo}</p>
             <a class="text-link" href="#projetos" data-route="projetos">Conhecer projeto <span aria-hidden="true">→</span></a>
         </article>`;
@@ -57,10 +57,10 @@ export function templateProjetos() {
         </article>`).join("");
 
     return `
-        <header class="page-header">
+        <header class="page-header" aria-labelledby="titulo-projetos">
             <div class="container narrow">
                 <p class="eyebrow">Iniciativas solidárias</p>
-                <h1>Projetos construídos com a comunidade</h1>
+                <h1 id="titulo-projetos">Projetos construídos com a comunidade</h1>
                 <p class="lead">Conheça as ações atuais e escolha onde deseja contribuir.</p>
             </div>
         </header>
@@ -69,49 +69,53 @@ export function templateProjetos() {
 
 export function templateCadastro() {
     return `
-        <header class="page-header">
+        <header class="page-header" aria-labelledby="titulo-cadastro">
             <div class="container narrow">
                 <p class="eyebrow">Cadastro de colaboradores</p>
-                <h1>Seu apoio começa por aqui</h1>
+                <h1 id="titulo-cadastro">Seu apoio começa por aqui</h1>
                 <p class="lead">Preencha os dados para demonstrar interesse em participar das próximas ações.</p>
             </div>
         </header>
-        <section class="section form-section">
+        <section class="section form-section" aria-labelledby="titulo-formulario">
             <div class="container form-layout">
                 <aside class="form-intro">
                     <p class="eyebrow">Formulário</p>
-                    <h2>Cadastro de doador ou voluntário</h2>
+                    <h2 id="titulo-formulario">Cadastro de doador ou voluntário</h2>
                     <p>O rascunho será preservado neste dispositivo durante o preenchimento.</p>
                 </aside>
-                <form class="registration-form" id="formulario" novalidate>
+                <form class="registration-form" id="formulario" aria-labelledby="titulo-formulario" novalidate>
                     <fieldset>
                         <legend>Dados principais</legend>
                         <div class="field full-field">
-                            <label for="nome">Nome completo *</label>
+                            <label for="nome">Nome completo <span aria-hidden="true">*</span></label>
                             <input id="nome" name="nome" type="text" autocomplete="name" required minlength="3" aria-describedby="nome-feedback">
+                            <small class="field-feedback" id="nome-feedback" aria-live="polite"></small>
                         </div>
                         <div class="field full-field">
-                            <label for="email">E-mail *</label>
+                            <label for="email">E-mail <span aria-hidden="true">*</span></label>
                             <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-feedback">
+                            <small class="field-feedback" id="email-feedback" aria-live="polite"></small>
                         </div>
                         <div class="field">
-                            <label for="telefone">Telefone *</label>
+                            <label for="telefone">Telefone <span aria-hidden="true">*</span></label>
                             <input id="telefone" name="telefone" type="text" inputmode="tel" placeholder="(00) 00000-0000" maxlength="15" pattern="\\([0-9]{2}\\) [0-9]{5}-[0-9]{4}" required aria-describedby="telefone-feedback">
+                            <small class="field-feedback" id="telefone-feedback" aria-live="polite"></small>
                         </div>
                         <div class="field">
-                            <label for="participacao">Forma de participação *</label>
+                            <label for="participacao">Forma de participação <span aria-hidden="true">*</span></label>
                             <select id="participacao" name="participacao" required aria-describedby="participacao-feedback">
                                 <option value="">Selecione</option>
                                 <option value="doador">Doador</option>
                                 <option value="voluntario">Voluntário</option>
                             </select>
+                            <small class="field-feedback" id="participacao-feedback" aria-live="polite"></small>
                         </div>
                     </fieldset>
                     <div class="form-actions">
                         <button class="button button-primary" type="submit">Salvar cadastro</button>
                         <button class="button button-secondary" type="reset">Limpar</button>
                     </div>
-                    <output class="form-status" id="form-status" aria-live="polite"></output>
+                    <output class="form-status" id="form-status" role="status"></output>
                 </form>
             </div>
         </section>`;
