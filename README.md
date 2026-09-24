@@ -1,17 +1,37 @@
-# Conexão Solidária - Experiência Prática IV
+# Conexão Solidária — Experiência Prática IV
 
-Consolidação da Single Page Application da organização Conexão Solidária com práticas profissionais de versionamento, acessibilidade, otimização, documentação e preparação para produção.
+## Visão geral
 
-## Experiência Prática IV
+Conexão Solidária é uma Single Page Application para uma organização do terceiro setor. A interface apresenta projetos sociais e permite que doadores ou voluntários registrem interesse em colaborar. Esta quarta experiência consolida a aplicação com práticas profissionais de versionamento, documentação, acessibilidade, otimização e preparação para produção.
 
-Esta etapa utiliza uma cópia independente do projeto anterior. O histórico da Experiência III foi preservado, enquanto este repositório recebe as melhorias de qualidade e produção. A estratégia de branches, commits e releases está documentada em [`VERSIONAMENTO.md`](VERSIONAMENTO.md).
+O projeto é uma cópia independente da Experiência III, preservando integralmente a entrega anterior.
 
-O histórico das entregas e versões pode ser consultado em [`CHANGELOG.md`](CHANGELOG.md). A versão atual de preparação é `v0.4.0-alpha.1`.
+## Funcionalidades
 
-## Estrutura
+- navegação SPA entre início, projetos e cadastro;
+- rotas identificáveis por hash e compatíveis com Voltar/Avançar;
+- projetos renderizados por templates JavaScript reutilizáveis;
+- formulário com validação e mensagens em tempo real;
+- máscara de telefone com alternativa em JavaScript puro;
+- persistência do rascunho no localStorage;
+- menu responsivo para dispositivos móveis;
+- feedbacks acessíveis para mudanças de rota e validação.
+
+## Tecnologias utilizadas
+
+- **HTML5:** estrutura semântica e ponto de montagem da SPA;
+- **CSS3:** design system, Grid, Flexbox, responsividade e estados visuais;
+- **JavaScript ES6:** módulos, DOM, eventos, templates, validação e roteamento;
+- **Web Storage API:** persistência local do formulário;
+- **IMask 7.6.1:** máscara progressiva do telefone, carregada por CDN;
+- **Git:** branches, commits semânticos, merges e tags de versão.
+
+Não há framework, etapa de build ou dependências locais obrigatórias.
+
+## Estrutura do projeto
 
 ```text
-conexao-solidaria-exp3/
+Projeto - Conexao Solidaria/
 |-- html/
 |   `-- index.html
 |-- css/
@@ -27,36 +47,101 @@ conexao-solidaria-exp3/
 |   |-- templates.js
 |   |-- ui.js
 |   `-- validacao.js
+|-- abrir-projeto.bat
+|-- CHANGELOG.md
+|-- TESTES.md
+|-- VERSIONAMENTO.md
 `-- README.md
 ```
 
-## Responsabilidades
+## Responsabilidades dos módulos
 
-- `html`: documento principal e ponto de montagem da SPA;
-- `css`: design system, layout responsivo e estados visuais;
-- `imagens`: recursos visuais em formatos JPG e WebP;
-- `js/app.js`: inicialização da aplicação;
-- `js/router.js`: navegação e renderização das rotas;
-- `js/templates.js`: templates dinâmicos das telas;
-- `js/dados.js`: dados estruturados dos projetos;
-- `js/validacao.js`: eventos e validação do formulário;
-- `js/storage.js`: leitura e gravação no `localStorage`;
-- `js/ui.js`: comportamentos compartilhados da interface.
+- `app.js`: inicialização da aplicação;
+- `router.js`: navegação, rotas e renderização;
+- `templates.js`: marcação dinâmica das telas;
+- `dados.js`: conteúdo estruturado dos projetos;
+- `ui.js`: menu e comportamentos compartilhados;
+- `validacao.js`: eventos e consistência do formulário;
+- `storage.js`: leitura, gravação e remoção no localStorage.
 
-## Como executar
+## Requisitos
 
-Por utilizar módulos JavaScript, o projeto deve ser aberto por um servidor local. No VS Code, pode-se utilizar a extensão Live Server e abrir `html/index.html`.
+- navegador moderno com suporte a módulos ES6;
+- Python 3, VS Code Live Server ou outro servidor HTTP local;
+- conexão com a internet somente para carregar a IMask. Sem conexão, a máscara nativa assume automaticamente.
 
-No Windows, também é possível executar `abrir-projeto.bat`. Ele inicia um servidor local e abre o endereço correto no navegador. Não abra `index.html` diretamente pelo Explorador de Arquivos, pois o protocolo `file://` impede o carregamento seguro dos módulos ES6 e deixa a área principal sem conteúdo.
+## Instalação e execução local
 
-## Navegação SPA
+### Opção 1 — Windows
 
-O roteador usa hashes (`#inicio`, `#projetos` e `#cadastro`) para manter URLs identificáveis sem recarregar o documento. A delegação de eventos em `document` intercepta cliques nos elementos `a[data-route]`, inclusive aqueles criados posteriormente pelos templates. A função `renderizarRota()` seleciona o template correspondente, substitui o conteúdo de `main#app` com `innerHTML`, atualiza o título, o item ativo da navegação, o aviso acessível e os comportamentos específicos da tela. O evento `hashchange` mantém os botões Voltar e Avançar do navegador funcionais.
+1. Abra a pasta do projeto.
+2. Execute `abrir-projeto.bat`.
+3. Aguarde o navegador abrir `http://localhost:4180/html/index.html#inicio`.
+4. Para encerrar, feche a janela minimizada do servidor.
 
-## Consistência do formulário
+### Opção 2 — Terminal
 
-A validação ocorre durante `input`, `change` e `submit`. Nome, e-mail e telefone são conferidos por expressões regulares, enquanto a forma de participação é validada por uma lista de opções permitidas. O telefone recebe máscara automática. A função `validarCampo()` injeta mensagens próximas ao controle, alterna as classes `is-valid` e `is-invalid` e mantém `aria-invalid`, `aria-describedby` e regiões `aria-live` sincronizados. No envio, todos os campos obrigatórios são reavaliados e o foco é levado ao primeiro erro; somente um conjunto válido é confirmado e persistido no `localStorage`.
+1. Abra um terminal na raiz do projeto.
+2. Confirme o Python com `python --version`.
+3. Execute `python -m http.server 4180`.
+4. Acesse `http://localhost:4180/html/index.html#inicio`.
+5. Encerre o servidor com `Ctrl+C`.
 
-## Biblioteca externa
+### Opção 3 — VS Code
 
-A biblioteca IMask 7.6.1 é carregada por CDN com versão fixa e aplicada exclusivamente ao campo de telefone. Ela controla a máscara `(00) 00000-0000` sem assumir outras responsabilidades da aplicação. Antes da inicialização, o código verifica a existência de `window.IMask`; se o CDN estiver indisponível, uma função nativa preserva o mesmo comportamento, evitando falha no fluxo principal.
+1. Instale a extensão Live Server.
+2. Abra `html/index.html` pelo comando **Open with Live Server**.
+
+Não abra o HTML diretamente pelo Explorador de Arquivos. O protocolo `file://` bloqueia o carregamento adequado dos módulos ES6.
+
+## Como utilizar
+
+1. Navegue entre **Início**, **Projetos** e **Quero colaborar**.
+2. No cadastro, preencha nome, e-mail, telefone e forma de participação.
+3. Observe os feedbacks de validação em cada campo.
+4. Atualize a página para confirmar a restauração do rascunho.
+5. Use **Limpar** para remover o formulário e o registro local.
+
+## Versionamento
+
+O projeto usa uma adaptação do GitFlow:
+
+- `main`: versões estáveis;
+- `develop`: integração das melhorias;
+- `feature/*`: funcionalidades isoladas;
+- `release/*`: preparação para produção;
+- `hotfix/*`: correções urgentes.
+
+As mensagens seguem Conventional Commits, incluindo `feat`, `fix`, `docs`, `test`, `perf`, `refactor` e `chore`. Consulte [VERSIONAMENTO.md](VERSIONAMENTO.md) para o fluxo completo e [CHANGELOG.md](CHANGELOG.md) para o histórico. A versão atual de preparação é `v0.4.0-alpha.1`.
+
+## Testes
+
+As verificações atuais contemplam:
+
+- sintaxe dos módulos JavaScript;
+- navegação entre rotas;
+- máscara e validação do formulário;
+- persistência no localStorage;
+- fallback da biblioteca externa;
+- responsividade sem rolagem horizontal em 390 px;
+- mensagens de erro e sucesso.
+
+Os problemas encontrados e suas correções estão descritos em [TESTES.md](TESTES.md).
+
+## Acessibilidade
+
+A aplicação já utiliza HTML semântico, link de salto, foco visível, associação entre rótulos e campos, `aria-current`, `aria-expanded`, `aria-invalid`, `aria-describedby` e regiões `aria-live`. A auditoria completa de conformidade WCAG 2.1 nível AA será registrada na etapa específica da Experiência IV.
+
+## Limitações atuais
+
+- os dados permanecem apenas no navegador do utilizador;
+- não há autenticação ou integração com back-end;
+- o repositório remoto próprio ainda será criado;
+- o deploy de produção será realizado após acessibilidade e otimização.
+
+## Documentação complementar
+
+- [Estratégia de versionamento](VERSIONAMENTO.md)
+- [Histórico de versões](CHANGELOG.md)
+- [Testes e correções](TESTES.md)
+- [Relatório da Experiência III](RELATORIO-EXPERIENCIA-PRATICA-III.md)
