@@ -7,13 +7,15 @@
     "dev": "vite --host 127.0.0.1 --port 4180",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
-    "audit:contrast": "node scripts/auditar-contraste.mjs"
+    "audit:contrast": "node scripts/auditar-contraste.mjs",
+    "optimize:images": "node scripts/otimizar-imagens.mjs"
   },
   "dependencies": {
     "imask": "^7.6.1"
   },
   "devDependencies": {
     "html-minifier-terser": "^7.2.0",
+    "sharp": "^0.35.4",
     "vite": "^8.3.1"
   }
 }

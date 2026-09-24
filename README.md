@@ -17,6 +17,7 @@ O projeto é uma cópia independente da Experiência III, preservando integralme
 - menu responsivo para dispositivos móveis;
 - feedbacks acessíveis para mudanças de rota e validação;
 - modo escuro automático ou manual, com preferência persistida.
+- imagem principal responsiva em AVIF, WebP e JPEG.
 
 ## Tecnologias utilizadas
 
@@ -27,6 +28,7 @@ O projeto é uma cópia independente da Experiência III, preservando integralme
 - **IMask 7.6.1:** máscara progressiva do telefone, incorporada ao pacote local;
 - **Vite 8:** servidor de desenvolvimento, empacotamento e geração da versão de produção;
 - **OXC e html-minifier-terser:** minificação de JavaScript, CSS e HTML;
+- **Sharp:** geração reproduzível das imagens responsivas e comprimidas;
 - **Git:** branches, commits semânticos, merges e tags de versão.
 
 ## Estrutura do projeto
@@ -38,6 +40,7 @@ Projeto - Conexao Solidaria/
 |-- css/
 |   `-- styles.css
 |-- imagens/
+|   |-- otimizadas/
 |   |-- voluntarios.jpg
 |   `-- voluntarios.webp
 |-- js/
@@ -53,6 +56,7 @@ Projeto - Conexao Solidaria/
 |-- vite.config.js
 |-- abrir-projeto.bat
 |-- BUILD.md
+|-- OTIMIZACAO-IMAGENS.md
 |-- CHANGELOG.md
 |-- TESTES.md
 |-- VERSIONAMENTO.md
@@ -98,6 +102,8 @@ Projeto - Conexao Solidaria/
 1. Execute `npm run build` para gerar a pasta `dist`.
 2. Execute `npm run preview` para servir os arquivos minificados.
 3. Acesse `http://localhost:4173/`.
+
+Para recriar as variantes AVIF, WebP e JPEG, execute `npm run optimize:images` antes do build.
 
 Não abra o HTML diretamente pelo Explorador de Arquivos. O protocolo `file://` não representa o ambiente real de execução dos módulos.
 
@@ -155,4 +161,5 @@ A aplicação utiliza HTML semântico, link de salto, navegação completa por t
 - [Decisões de acessibilidade](ACESSIBILIDADE.md)
 - [Auditoria de contraste](CONTRASTE.md)
 - [Build e minificação](BUILD.md)
+- [Otimização de imagens e desempenho](OTIMIZACAO-IMAGENS.md)
 - [Relatório da Experiência III](RELATORIO-EXPERIENCIA-PRATICA-III.md)

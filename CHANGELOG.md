@@ -10,12 +10,16 @@ As alterações relevantes deste projeto são documentadas neste arquivo. A vers
 - minificação de HTML, CSS e JavaScript;
 - separação da biblioteca IMask em pacote `vendor` local;
 - documentação das configurações e métricas em `BUILD.md`.
+- variantes responsivas da imagem principal em AVIF, WebP e JPEG;
+- script reproduzível de otimização de imagens com Sharp;
+- documentação das métricas de imagem e carregamento.
 
 ### Alterado
 
 - referências de imagens compatíveis com o processamento e versionamento do Vite;
 - inicialização local migrada para o servidor de desenvolvimento do Vite;
 - dependência da IMask removida do CDN.
+- imagem principal configurada com `picture`, `srcset`, `sizes` e prioridade adequada ao LCP.
 
 ## [0.4.0-alpha.1] - 2026-09-23
 
