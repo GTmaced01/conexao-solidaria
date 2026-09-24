@@ -18,6 +18,23 @@
 - **Diagnóstico:** o console exibiu `SyntaxError` e o teste de `validity.patternMismatch` confirmou que o padrão não era processado corretamente.
 - **Solução:** os parênteses literais foram escapados corretamente no template. O teste final aceitou `(11) 98765-4321` sem erros no console.
 
+## 4. Links do menu ignorados pelo teclado
+
+- **Problema:** ao abrir o menu móvel e pressionar `Tab` imediatamente, a animação ainda mantinha os links invisíveis e o foco podia saltar para o conteúdo.
+- **Diagnóstico:** a inspeção do estilo computado retornou `visibility: hidden` logo após a abertura.
+- **Solução:** a visibilidade passou a ser imediata na abertura e postergada apenas no fechamento. O teste confirmou a sequência Início, Projetos e Quero colaborar.
+
+## 5. Link de salto interpretado como rota
+
+- **Problema:** o hash `#app` do link de salto acionava indevidamente uma nova renderização da SPA.
+- **Diagnóstico:** a simulação com `Tab` e `Enter` mostrou uma mudança de rota concorrendo com o gerenciamento do foco.
+- **Solução:** o roteador passou a reagir somente aos hashes cadastrados como rotas, preservando o foco no conteúdo principal.
+
+## 6. Modo escuro e contraste
+
+- **Validação:** troca manual, `aria-pressed`, nome acessível, preferência automática do sistema e persistência após recarregar foram testados no Chrome.
+- **Contraste:** 18 pares foram verificados pelo script `scripts/auditar-contraste.mjs`; todos atenderam aos limites de 4,5:1 para textos ou 3:1 para componentes essenciais.
+
 ## Evidências finais
 
 - arquivos JavaScript aprovados na verificação de sintaxe;
@@ -26,4 +43,7 @@
 - telefone formatado como `(11) 98765-4321`;
 - cadastro validado e persistido no `localStorage`;
 - ausência de rolagem horizontal em viewport de 390 px;
+- navegação por teclado aprovada com `Tab`, `Enter` e `Escape`;
+- modo escuro persistente e responsivo aprovado;
+- todos os pares da auditoria de contraste aprovados;
 - nenhuma falha de console nos testes finais com os recursos disponíveis.

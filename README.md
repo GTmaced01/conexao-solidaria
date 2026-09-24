@@ -15,7 +15,8 @@ O projeto é uma cópia independente da Experiência III, preservando integralme
 - máscara de telefone com alternativa em JavaScript puro;
 - persistência do rascunho no localStorage;
 - menu responsivo para dispositivos móveis;
-- feedbacks acessíveis para mudanças de rota e validação.
+- feedbacks acessíveis para mudanças de rota e validação;
+- modo escuro automático ou manual, com preferência persistida.
 
 ## Tecnologias utilizadas
 
@@ -124,13 +125,14 @@ As verificações atuais contemplam:
 - persistência no localStorage;
 - fallback da biblioteca externa;
 - responsividade sem rolagem horizontal em 390 px;
-- mensagens de erro e sucesso.
+- mensagens de erro e sucesso;
+- contraste WCAG 2.1 AA nos modos claro e escuro.
 
 Os problemas encontrados e suas correções estão descritos em [TESTES.md](TESTES.md).
 
 ## Acessibilidade
 
-A aplicação utiliza HTML semântico, link de salto, associação entre rótulos e campos, `aria-current`, `aria-expanded`, `aria-busy`, `aria-invalid`, `aria-describedby` e regiões de status. As decisões e os critérios WCAG 2.1 relacionados estão documentados em [ACESSIBILIDADE.md](ACESSIBILIDADE.md). A navegação por teclado e o contraste serão aprofundados nas próximas etapas.
+A aplicação utiliza HTML semântico, link de salto, navegação completa por teclado, foco visível, associação entre rótulos e campos, estados WAI-ARIA, regiões de status e paletas com contraste WCAG 2.1 AA. As decisões estão em [ACESSIBILIDADE.md](ACESSIBILIDADE.md) e os resultados cromáticos em [CONTRASTE.md](CONTRASTE.md).
 
 ## Limitações atuais
 
@@ -144,4 +146,6 @@ A aplicação utiliza HTML semântico, link de salto, associação entre rótulo
 - [Estratégia de versionamento](VERSIONAMENTO.md)
 - [Histórico de versões](CHANGELOG.md)
 - [Testes e correções](TESTES.md)
+- [Decisões de acessibilidade](ACESSIBILIDADE.md)
+- [Auditoria de contraste](CONTRASTE.md)
 - [Relatório da Experiência III](RELATORIO-EXPERIENCIA-PRATICA-III.md)

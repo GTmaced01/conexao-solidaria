@@ -34,6 +34,14 @@ Os campos possuem rótulos visíveis, indicação nativa de obrigatoriedade e me
 - Ao falhar a validação, o foco segue para o primeiro campo inválido, mantendo sua mensagem associada.
 - A rolagem animada é desativada quando o sistema informa `prefers-reduced-motion: reduce`.
 
+## Contraste e modo escuro
+
+- O controle de tema é um botão com `aria-pressed` e nome acessível atualizado conforme o estado.
+- A preferência manual é preservada no `localStorage`; sem escolha salva, vale `prefers-color-scheme` do sistema.
+- O modo escuro redefine tokens semânticos de texto, superfícies, bordas, mensagens e controles, sem duplicar componentes.
+- Todos os pares textuais auditados superam 4,5:1; bordas essenciais de campos superam 3:1.
+- A auditoria reproduzível e as razões obtidas estão registradas em [CONTRASTE.md](CONTRASTE.md).
+
 ## Critérios relacionados
 
 - 1.3.1 Informações e Relações
@@ -41,10 +49,12 @@ Os campos possuem rótulos visíveis, indicação nativa de obrigatoriedade e me
 - 2.4.2 Página com Título
 - 2.4.3 Ordem do Foco
 - 2.4.7 Foco Visível
+- 1.4.3 Contraste (Mínimo)
+- 1.4.11 Contraste Não Textual
 - 2.4.6 Cabeçalhos e Rótulos
 - 3.3.1 Identificação do Erro
 - 3.3.2 Rótulos ou Instruções
 - 4.1.2 Nome, Função, Valor
 - 4.1.3 Mensagens de Estado
 
-As etapas seguintes complementam esta auditoria com contraste visual e modos de cor.
+A aplicação deverá ser novamente auditada sempre que a paleta ou novos componentes visuais forem alterados.
