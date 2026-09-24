@@ -1,6 +1,10 @@
-# Conexão Solidária - Experiência Prática III
+# Conexão Solidária - Experiência Prática IV
 
-Evolução da interface da Experiência Prática II para uma Single Page Application construída com HTML5, CSS3 e JavaScript modular.
+Consolidação da Single Page Application da organização Conexão Solidária com práticas profissionais de versionamento, acessibilidade, otimização, documentação e preparação para produção.
+
+## Experiência Prática IV
+
+Esta etapa utiliza uma cópia independente do projeto anterior. O histórico da Experiência III foi preservado, enquanto este repositório recebe as melhorias de qualidade e produção. A estratégia de branches, commits e releases está documentada em [`VERSIONAMENTO.md`](VERSIONAMENTO.md).
 
 ## Estrutura
 
