@@ -33,11 +33,13 @@ export function renderizarRota() {
     const rota = rotaAtual();
     const app = document.querySelector("#app");
 
+    app.setAttribute("aria-busy", "true");
     app.innerHTML = templates[rota]();
     document.title = `${titulos[rota]} | Conexão Solidária`;
     atualizarNavegacao(rota);
     anunciarRota(titulos[rota]);
     iniciarFormulario();
+    app.setAttribute("aria-busy", "false");
     app.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
