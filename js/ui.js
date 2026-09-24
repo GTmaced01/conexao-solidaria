@@ -1,3 +1,11 @@
+function definirEstadoMenu(menu, botao, aberto) {
+    menu.classList.toggle("is-open", aberto);
+    botao.setAttribute("aria-expanded", String(aberto));
+    botao.querySelector(".sr-only").textContent = aberto
+        ? "Fechar menu principal"
+        : "Abrir menu principal";
+}
+
 export function atualizarNavegacao(rota) {
     document.querySelectorAll("[data-route]").forEach(link => {
         const ativo = link.dataset.route === rota;
@@ -7,9 +15,7 @@ export function atualizarNavegacao(rota) {
 
     const menu = document.querySelector(".site-nav");
     const botao = document.querySelector(".menu-toggle");
-    menu.classList.remove("is-open");
-    botao.setAttribute("aria-expanded", "false");
-    botao.querySelector(".sr-only").textContent = "Abrir menu principal";
+    definirEstadoMenu(menu, botao, false);
 }
 
 export function anunciarRota(titulo) {
@@ -22,10 +28,15 @@ export function iniciarMenuResponsivo() {
 
     botao.addEventListener("click", () => {
         const aberto = botao.getAttribute("aria-expanded") === "true";
-        botao.setAttribute("aria-expanded", String(!aberto));
-        menu.classList.toggle("is-open", !aberto);
-        botao.querySelector(".sr-only").textContent = aberto
-            ? "Abrir menu principal"
-            : "Fechar menu principal";
+        definirEstadoMenu(menu, botao, !aberto);
+    });
+
+    document.addEventListener("keydown", evento => {
+        const menuAberto = botao.getAttribute("aria-expanded") === "true";
+        if (evento.key !== "Escape" || !menuAberto) return;
+
+        evento.preventDefault();
+        definirEstadoMenu(menu, botao, false);
+        botao.focus();
     });
 }

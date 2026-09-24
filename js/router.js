@@ -29,7 +29,7 @@ function interceptarNavegacao(evento) {
     window.location.hash = destino;
 }
 
-export function renderizarRota() {
+export function renderizarRota({ gerenciarFoco = true } = {}) {
     const rota = rotaAtual();
     const app = document.querySelector("#app");
 
@@ -40,8 +40,9 @@ export function renderizarRota() {
     anunciarRota(titulos[rota]);
     iniciarFormulario();
     app.setAttribute("aria-busy", "false");
-    app.focus({ preventScroll: true });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (gerenciarFoco) app.focus({ preventScroll: true });
+    const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduzirMovimento ? "auto" : "smooth" });
 }
 
 export function iniciarRoteador() {
@@ -51,6 +52,9 @@ export function iniciarRoteador() {
     }
 
     document.addEventListener("click", interceptarNavegacao);
-    window.addEventListener("hashchange", renderizarRota);
-    renderizarRota();
+    window.addEventListener("hashchange", () => {
+        const rota = window.location.hash.replace("#", "").split("/")[0];
+        if (Object.hasOwn(templates, rota)) renderizarRota();
+    });
+    renderizarRota({ gerenciarFoco: false });
 }
