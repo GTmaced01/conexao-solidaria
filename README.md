@@ -12,7 +12,7 @@ O projeto é uma cópia independente da Experiência III, preservando integralme
 - rotas identificáveis por hash e compatíveis com Voltar/Avançar;
 - projetos renderizados por templates JavaScript reutilizáveis;
 - formulário com validação e mensagens em tempo real;
-- máscara de telefone com alternativa em JavaScript puro;
+- máscara progressiva de telefone incorporada ao pacote de produção;
 - persistência do rascunho no localStorage;
 - menu responsivo para dispositivos móveis;
 - feedbacks acessíveis para mudanças de rota e validação;
@@ -24,10 +24,10 @@ O projeto é uma cópia independente da Experiência III, preservando integralme
 - **CSS3:** design system, Grid, Flexbox, responsividade e estados visuais;
 - **JavaScript ES6:** módulos, DOM, eventos, templates, validação e roteamento;
 - **Web Storage API:** persistência local do formulário;
-- **IMask 7.6.1:** máscara progressiva do telefone, carregada por CDN;
+- **IMask 7.6.1:** máscara progressiva do telefone, incorporada ao pacote local;
+- **Vite 8:** servidor de desenvolvimento, empacotamento e geração da versão de produção;
+- **OXC e html-minifier-terser:** minificação de JavaScript, CSS e HTML;
 - **Git:** branches, commits semânticos, merges e tags de versão.
-
-Não há framework, etapa de build ou dependências locais obrigatórias.
 
 ## Estrutura do projeto
 
@@ -48,7 +48,11 @@ Projeto - Conexao Solidaria/
 |   |-- templates.js
 |   |-- ui.js
 |   `-- validacao.js
+|-- package.json
+|-- package-lock.json
+|-- vite.config.js
 |-- abrir-projeto.bat
+|-- BUILD.md
 |-- CHANGELOG.md
 |-- TESTES.md
 |-- VERSIONAMENTO.md
@@ -67,9 +71,9 @@ Projeto - Conexao Solidaria/
 
 ## Requisitos
 
-- navegador moderno com suporte a módulos ES6;
-- Python 3, VS Code Live Server ou outro servidor HTTP local;
-- conexão com a internet somente para carregar a IMask. Sem conexão, a máscara nativa assume automaticamente.
+- navegador moderno;
+- Node.js e npm para instalar as dependências e executar o Vite;
+- conexão com a internet apenas na primeira instalação das dependências.
 
 ## Instalação e execução local
 
@@ -77,23 +81,25 @@ Projeto - Conexao Solidaria/
 
 1. Abra a pasta do projeto.
 2. Execute `abrir-projeto.bat`.
-3. Aguarde o navegador abrir `http://localhost:4180/html/index.html#inicio`.
-4. Para encerrar, feche a janela minimizada do servidor.
+3. Na primeira execução, aguarde a instalação automática das dependências.
+4. O navegador abrirá `http://localhost:4180/#inicio`.
+5. Para encerrar, feche a janela minimizada do servidor.
 
 ### Opção 2 — Terminal
 
 1. Abra um terminal na raiz do projeto.
-2. Confirme o Python com `python --version`.
-3. Execute `python -m http.server 4180`.
-4. Acesse `http://localhost:4180/html/index.html#inicio`.
+2. Execute `npm install`.
+3. Execute `npm run dev`.
+4. Acesse `http://localhost:4180/#inicio`.
 5. Encerre o servidor com `Ctrl+C`.
 
-### Opção 3 — VS Code
+### Gerar e conferir a versão de produção
 
-1. Instale a extensão Live Server.
-2. Abra `html/index.html` pelo comando **Open with Live Server**.
+1. Execute `npm run build` para gerar a pasta `dist`.
+2. Execute `npm run preview` para servir os arquivos minificados.
+3. Acesse `http://localhost:4173/`.
 
-Não abra o HTML diretamente pelo Explorador de Arquivos. O protocolo `file://` bloqueia o carregamento adequado dos módulos ES6.
+Não abra o HTML diretamente pelo Explorador de Arquivos. O protocolo `file://` não representa o ambiente real de execução dos módulos.
 
 ## Como utilizar
 
@@ -123,7 +129,7 @@ As verificações atuais contemplam:
 - navegação entre rotas;
 - máscara e validação do formulário;
 - persistência no localStorage;
-- fallback da biblioteca externa;
+- carregamento da biblioteca incorporada ao pacote de produção;
 - responsividade sem rolagem horizontal em 390 px;
 - mensagens de erro e sucesso;
 - contraste WCAG 2.1 AA nos modos claro e escuro.
@@ -139,7 +145,7 @@ A aplicação utiliza HTML semântico, link de salto, navegação completa por t
 - os dados permanecem apenas no navegador do utilizador;
 - não há autenticação ou integração com back-end;
 - o repositório remoto próprio ainda será criado;
-- o deploy de produção será realizado após acessibilidade e otimização.
+- a publicação em um endereço público será realizada na etapa de deploy.
 
 ## Documentação complementar
 
@@ -148,4 +154,5 @@ A aplicação utiliza HTML semântico, link de salto, navegação completa por t
 - [Testes e correções](TESTES.md)
 - [Decisões de acessibilidade](ACESSIBILIDADE.md)
 - [Auditoria de contraste](CONTRASTE.md)
+- [Build e minificação](BUILD.md)
 - [Relatório da Experiência III](RELATORIO-EXPERIENCIA-PRATICA-III.md)

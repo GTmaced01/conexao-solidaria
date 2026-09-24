@@ -2,6 +2,21 @@
 
 As alterações relevantes deste projeto são documentadas neste arquivo. A versão segue o padrão `MAJOR.MINOR.PATCH`, com identificadores de pré-lançamento durante a preparação da Experiência Prática IV.
 
+## [Não publicado]
+
+### Adicionado
+
+- build de produção com Vite 8;
+- minificação de HTML, CSS e JavaScript;
+- separação da biblioteca IMask em pacote `vendor` local;
+- documentação das configurações e métricas em `BUILD.md`.
+
+### Alterado
+
+- referências de imagens compatíveis com o processamento e versionamento do Vite;
+- inicialização local migrada para o servidor de desenvolvimento do Vite;
+- dependência da IMask removida do CDN.
+
 ## [0.4.0-alpha.1] - 2026-09-23
 
 ### Adicionado

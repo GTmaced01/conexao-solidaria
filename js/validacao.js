@@ -1,3 +1,4 @@
+import IMask from "imask";
 import { carregarRascunho, limparRascunho, salvarRascunho } from "./storage.js";
 
 const regras = {
@@ -29,19 +30,6 @@ function restaurarRascunho(formulario) {
         const campo = formulario.elements.namedItem(nome);
         if (campo) campo.value = valor;
     });
-}
-
-function aplicarMascaraTelefone(campo) {
-    const numeros = campo.value.replace(/\D/g, "").slice(0, 11);
-    const ddd = numeros.slice(0, 2);
-    const primeiraParte = numeros.slice(2, 7);
-    const segundaParte = numeros.slice(7, 11);
-
-    campo.value = [
-        ddd ? `(${ddd}${ddd.length === 2 ? ")" : ""}` : "",
-        primeiraParte ? ` ${primeiraParte}` : "",
-        segundaParte ? `-${segundaParte}` : ""
-    ].join("");
 }
 
 function obterFeedback(campo) {
@@ -100,15 +88,14 @@ export function iniciarFormulario() {
     const status = formulario.querySelector("#form-status");
     restaurarRascunho(formulario);
     const campoTelefone = formulario.elements.namedItem("telefone");
-    const mascaraTelefone = typeof window.IMask === "function" && campoTelefone
-        ? window.IMask(campoTelefone, { mask: "(00) 00000-0000", lazy: true })
+    const mascaraTelefone = campoTelefone
+        ? IMask(campoTelefone, { mask: "(00) 00000-0000", lazy: true })
         : null;
 
     formulario.addEventListener("input", evento => {
         const campo = evento.target.closest("input, select");
         if (!campo) return;
 
-        if (campo.name === "telefone" && !mascaraTelefone) aplicarMascaraTelefone(campo);
         validarCampo(campo);
         salvarRascunho(dadosDoFormulario(formulario));
         status.textContent = "Rascunho salvo neste dispositivo.";

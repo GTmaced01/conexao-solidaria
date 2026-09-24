@@ -6,11 +6,11 @@
 - **Diagnóstico:** o console indicou bloqueio do carregamento dos módulos ES6 pelo protocolo `file://`.
 - **Solução:** execução por servidor HTTP local e criação de `abrir-projeto.bat`, que inicia o servidor e abre a URL correta.
 
-## 2. Biblioteca externa indisponível
+## 2. Dependência externa da máscara
 
-- **Problema:** a máscara IMask poderia não carregar em redes sem acesso ao CDN.
-- **Diagnóstico:** a aba Network e o console exibiram falha na requisição, enquanto `window.IMask` permaneceu indefinido.
-- **Solução:** verificação de disponibilidade antes da inicialização e função nativa de máscara como fallback, preservando o formulário.
+- **Problema:** a máscara IMask dependia de uma requisição ao CDN e poderia não carregar em redes restritas.
+- **Diagnóstico:** a aba Network e o console confirmaram que a aplicação dependia de um recurso externo em tempo de execução.
+- **Solução:** instalação da IMask como dependência local e incorporação em um pacote `vendor` pelo Vite. A aplicação deixa de depender do CDN após o build.
 
 ## 3. Padrão do telefone incompatível
 
@@ -46,4 +46,5 @@
 - navegação por teclado aprovada com `Tab`, `Enter` e `Escape`;
 - modo escuro persistente e responsivo aprovado;
 - todos os pares da auditoria de contraste aprovados;
+- build de produção minificado e carregamento local da IMask aprovados;
 - nenhuma falha de console nos testes finais com os recursos disponíveis.

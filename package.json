@@ -1,0 +1,19 @@
+{
+  "name": "conexao-solidaria",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4180",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "audit:contrast": "node scripts/auditar-contraste.mjs"
+  },
+  "dependencies": {
+    "imask": "^7.6.1"
+  },
+  "devDependencies": {
+    "html-minifier-terser": "^7.2.0",
+    "vite": "^8.3.1"
+  }
+}
