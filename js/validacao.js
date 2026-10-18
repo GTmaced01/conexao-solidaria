@@ -1,5 +1,7 @@
 import IMask from "imask";
 import { carregarRascunho, limparRascunho, salvarRascunho } from "./storage.js";
+import { salvarCadastroRemoto } from "./servicos.js";
+import { supabaseConfigurado } from "./supabase.js";
 
 const regras = {
     nome: {
@@ -107,7 +109,7 @@ export function iniciarFormulario() {
         if (campo) validarCampo(campo);
     });
 
-    formulario.addEventListener("submit", evento => {
+    formulario.addEventListener("submit", async evento => {
         evento.preventDefault();
         const campos = [...formulario.querySelectorAll("[required]")];
         const formularioValido = campos.map(validarCampo).every(Boolean);
@@ -120,10 +122,30 @@ export function iniciarFormulario() {
             return;
         }
 
-        salvarRascunho(dadosDoFormulario(formulario));
-        status.textContent = "Cadastro validado e salvo localmente com sucesso.";
-        status.className = "form-status is-success";
-        formulario.classList.add("is-success");
+        if (!supabaseConfigurado) {
+            status.textContent = "A conexão segura ainda não foi configurada neste ambiente.";
+            status.className = "form-status is-error";
+            return;
+        }
+
+        const botaoEnviar = formulario.querySelector('button[type="submit"]');
+        botaoEnviar.disabled = true;
+        status.textContent = "Enviando cadastro com segurança...";
+        status.className = "form-status";
+
+        try {
+            await salvarCadastroRemoto(dadosDoFormulario(formulario));
+            limparRascunho();
+            status.textContent = "Cadastro enviado com sucesso. Entraremos em contato pelas próximas ações.";
+            status.className = "form-status is-success";
+            formulario.classList.add("is-success");
+        } catch (erro) {
+            status.textContent = erro instanceof Error ? erro.message : "Não foi possível enviar o cadastro.";
+            status.className = "form-status is-error";
+            formulario.classList.remove("is-success");
+        } finally {
+            botaoEnviar.disabled = false;
+        }
     });
 
     formulario.addEventListener("reset", () => {
