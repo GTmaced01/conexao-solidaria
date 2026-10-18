@@ -1,16 +1,52 @@
-# Conexão Solidária - Experiência Prática III
+# Conexão Solidária — Experiência Prática IV
 
-Evolução da interface da Experiência Prática II para uma Single Page Application construída com HTML5, CSS3 e JavaScript modular.
+## Visão geral
 
-## Estrutura
+Conexão Solidária é uma Single Page Application para uma organização do terceiro setor. A interface apresenta projetos sociais e permite que doadores ou voluntários registrem interesse em colaborar. Esta quarta experiência consolida a aplicação com práticas profissionais de versionamento, documentação, acessibilidade, otimização e preparação para produção.
+
+**Produção:** https://conexao-solidaria-virid.vercel.app
+
+O projeto é uma cópia independente da Experiência III, preservando integralmente a entrega anterior.
+
+## Funcionalidades
+
+- navegação SPA entre início, projetos e cadastro;
+- rotas identificáveis por hash e compatíveis com Voltar/Avançar;
+- projetos renderizados por templates JavaScript reutilizáveis;
+- formulário com validação e mensagens em tempo real;
+- máscara progressiva de telefone incorporada ao pacote de produção;
+- persistência local do rascunho durante o preenchimento;
+- autenticação sem senha por link enviado ao e-mail;
+- cadastro persistido no PostgreSQL do Supabase;
+- isolamento dos dados por usuário com Row Level Security (RLS);
+- menu responsivo para dispositivos móveis;
+- feedbacks acessíveis para mudanças de rota e validação;
+- modo escuro automático ou manual, com preferência persistida.
+- imagem principal responsiva em AVIF, WebP e JPEG.
+
+## Tecnologias utilizadas
+
+- **HTML5:** estrutura semântica e ponto de montagem da SPA;
+- **CSS3:** design system, Grid, Flexbox, responsividade e estados visuais;
+- **JavaScript ES6:** módulos, DOM, eventos, templates, validação e roteamento;
+- **Web Storage API:** persistência local do formulário;
+- **Supabase:** autenticação, PostgreSQL, API de dados e políticas RLS;
+- **IMask 7.6.1:** máscara progressiva do telefone, incorporada ao pacote local;
+- **Vite 8:** servidor de desenvolvimento, empacotamento e geração da versão de produção;
+- **OXC e html-minifier-terser:** minificação de JavaScript, CSS e HTML;
+- **Sharp:** geração reproduzível das imagens responsivas e comprimidas;
+- **Git:** branches, commits semânticos, merges e tags de versão.
+
+## Estrutura do projeto
 
 ```text
-conexao-solidaria-exp3/
+Projeto - Conexao Solidaria/
 |-- html/
 |   `-- index.html
 |-- css/
 |   `-- styles.css
 |-- imagens/
+|   |-- otimizadas/
 |   |-- voluntarios.jpg
 |   `-- voluntarios.webp
 |-- js/
@@ -21,36 +57,129 @@ conexao-solidaria-exp3/
 |   |-- templates.js
 |   |-- ui.js
 |   `-- validacao.js
+|-- package.json
+|-- package-lock.json
+|-- vite.config.js
+|-- abrir-projeto.bat
+|-- BUILD.md
+|-- DEPLOY.md
+|-- OTIMIZACAO-IMAGENS.md
+|-- CHANGELOG.md
+|-- TESTES.md
+|-- VERSIONAMENTO.md
 `-- README.md
 ```
 
-## Responsabilidades
+## Responsabilidades dos módulos
 
-- `html`: documento principal e ponto de montagem da SPA;
-- `css`: design system, layout responsivo e estados visuais;
-- `imagens`: recursos visuais em formatos JPG e WebP;
-- `js/app.js`: inicialização da aplicação;
-- `js/router.js`: navegação e renderização das rotas;
-- `js/templates.js`: templates dinâmicos das telas;
-- `js/dados.js`: dados estruturados dos projetos;
-- `js/validacao.js`: eventos e validação do formulário;
-- `js/storage.js`: leitura e gravação no `localStorage`;
-- `js/ui.js`: comportamentos compartilhados da interface.
+- `app.js`: inicialização da aplicação;
+- `router.js`: navegação, rotas e renderização;
+- `templates.js`: marcação dinâmica das telas;
+- `dados.js`: conteúdo estruturado dos projetos;
+- `ui.js`: menu e comportamentos compartilhados;
+- `validacao.js`: eventos e consistência do formulário;
+- `storage.js`: leitura, gravação e remoção no localStorage.
 
-## Como executar
+## Requisitos
 
-Por utilizar módulos JavaScript, o projeto deve ser aberto por um servidor local. No VS Code, pode-se utilizar a extensão Live Server e abrir `html/index.html`.
+- navegador moderno;
+- Node.js e npm para instalar as dependências e executar o Vite;
+- conexão com a internet apenas na primeira instalação das dependências.
 
-No Windows, também é possível executar `abrir-projeto.bat`. Ele inicia um servidor local e abre o endereço correto no navegador. Não abra `index.html` diretamente pelo Explorador de Arquivos, pois o protocolo `file://` impede o carregamento seguro dos módulos ES6 e deixa a área principal sem conteúdo.
+## Instalação e execução local
 
-## Navegação SPA
+Copie `.env.example` para `.env` e preencha somente `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`. Chaves secretas e `service_role` nunca pertencem ao navegador.
 
-O roteador usa hashes (`#inicio`, `#projetos` e `#cadastro`) para manter URLs identificáveis sem recarregar o documento. A delegação de eventos em `document` intercepta cliques nos elementos `a[data-route]`, inclusive aqueles criados posteriormente pelos templates. A função `renderizarRota()` seleciona o template correspondente, substitui o conteúdo de `main#app` com `innerHTML`, atualiza o título, o item ativo da navegação, o aviso acessível e os comportamentos específicos da tela. O evento `hashchange` mantém os botões Voltar e Avançar do navegador funcionais.
+### Opção 1 — Windows
 
-## Consistência do formulário
+1. Abra a pasta do projeto.
+2. Execute `abrir-projeto.bat`.
+3. Na primeira execução, aguarde a instalação automática das dependências.
+4. O navegador abrirá `http://localhost:4180/#inicio`.
+5. Para encerrar, feche a janela minimizada do servidor.
 
-A validação ocorre durante `input`, `change` e `submit`. Nome, e-mail e telefone são conferidos por expressões regulares, enquanto a forma de participação é validada por uma lista de opções permitidas. O telefone recebe máscara automática. A função `validarCampo()` injeta mensagens próximas ao controle, alterna as classes `is-valid` e `is-invalid` e mantém `aria-invalid`, `aria-describedby` e regiões `aria-live` sincronizados. No envio, todos os campos obrigatórios são reavaliados e o foco é levado ao primeiro erro; somente um conjunto válido é confirmado e persistido no `localStorage`.
+### Opção 2 — Terminal
 
-## Biblioteca externa
+1. Abra um terminal na raiz do projeto.
+2. Execute `npm install`.
+3. Execute `npm run dev`.
+4. Acesse `http://localhost:4180/#inicio`.
+5. Encerre o servidor com `Ctrl+C`.
 
-A biblioteca IMask 7.6.1 é carregada por CDN com versão fixa e aplicada exclusivamente ao campo de telefone. Ela controla a máscara `(00) 00000-0000` sem assumir outras responsabilidades da aplicação. Antes da inicialização, o código verifica a existência de `window.IMask`; se o CDN estiver indisponível, uma função nativa preserva o mesmo comportamento, evitando falha no fluxo principal.
+### Gerar e conferir a versão de produção
+
+1. Execute `npm run build` para gerar a pasta `dist`.
+2. Execute `npm run preview` para servir os arquivos minificados.
+3. Acesse `http://localhost:4173/`.
+
+Para recriar as variantes AVIF, WebP e JPEG, execute `npm run optimize:images` antes do build.
+
+Não abra o HTML diretamente pelo Explorador de Arquivos. O protocolo `file://` não representa o ambiente real de execução dos módulos.
+
+## Como utilizar
+
+1. Navegue entre **Início**, **Projetos** e **Quero colaborar**.
+2. No cadastro, preencha nome, e-mail, telefone e forma de participação.
+3. Observe os feedbacks de validação em cada campo.
+4. Atualize a página para confirmar a restauração do rascunho.
+5. Use **Limpar** para remover o formulário e o registro local.
+
+## Versionamento
+
+O projeto usa uma adaptação do GitFlow:
+
+- `main`: versões estáveis;
+- `develop`: integração das melhorias;
+- `feature/*`: funcionalidades isoladas;
+- `release/*`: preparação para produção;
+- `hotfix/*`: correções urgentes.
+
+As mensagens seguem Conventional Commits, incluindo `feat`, `fix`, `docs`, `test`, `perf`, `refactor` e `chore`. Consulte [VERSIONAMENTO.md](VERSIONAMENTO.md) para o fluxo completo e [CHANGELOG.md](CHANGELOG.md) para o histórico.
+
+## Testes
+
+As verificações atuais contemplam:
+
+- sintaxe dos módulos JavaScript;
+- navegação entre rotas;
+- máscara e validação do formulário;
+- persistência no localStorage;
+- carregamento da biblioteca incorporada ao pacote de produção;
+- responsividade sem rolagem horizontal em 390 px;
+- mensagens de erro e sucesso;
+- contraste WCAG 2.1 AA nos modos claro e escuro.
+
+Os problemas encontrados e suas correções estão descritos em [TESTES.md](TESTES.md).
+
+## Acessibilidade
+
+A aplicação utiliza HTML semântico, link de salto, navegação completa por teclado, foco visível, associação entre rótulos e campos, estados WAI-ARIA, regiões de status e paletas com contraste WCAG 2.1 AA. As decisões estão em [ACESSIBILIDADE.md](ACESSIBILIDADE.md) e os resultados cromáticos em [CONTRASTE.md](CONTRASTE.md).
+
+## Limitações atuais
+
+- o repositório remoto próprio ainda será criado;
+- a migração e as variáveis de produção precisam ser aplicadas ao novo projeto Supabase;
+- o workflow de CI/CD será ativado quando o código for enviado ao repositório remoto e as variáveis públicas da Vercel forem cadastradas.
+
+## Banco de dados e segurança
+
+A pasta `supabase/` é a fonte da verdade do banco. A migração inicial cria perfis, projetos sociais e solicitações de colaboração, habilita RLS em todas as tabelas públicas e concede apenas os privilégios necessários aos papéis `anon` e `authenticated`.
+
+Comandos principais:
+
+- `npm run supabase:start`: inicia o ambiente local;
+- `npm run supabase:reset`: recria o banco a partir das migrações;
+- `npm run check:secrets`: impede o versionamento de segredos conhecidos;
+- `npm run check`: executa as verificações de segurança, contraste e produção.
+
+## Documentação complementar
+
+- [Estratégia de versionamento](VERSIONAMENTO.md)
+- [Histórico de versões](CHANGELOG.md)
+- [Testes e correções](TESTES.md)
+- [Decisões de acessibilidade](ACESSIBILIDADE.md)
+- [Auditoria de contraste](CONTRASTE.md)
+- [Build e minificação](BUILD.md)
+- [Otimização de imagens e desempenho](OTIMIZACAO-IMAGENS.md)
+- [Publicação e CI/CD](DEPLOY.md)
+- [Relatório da Experiência III](RELATORIO-EXPERIENCIA-PRATICA-III.md)

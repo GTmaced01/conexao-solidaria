@@ -1,12 +1,30 @@
 import { templates } from "./templates.js";
 import { anunciarRota, atualizarNavegacao } from "./ui.js";
 import { iniciarFormulario } from "./validacao.js";
+import { iniciarMonitoramento } from "./monitoramento.js";
+import { iniciarAutenticacao } from "./autenticacao.js";
+import { listarProjetosAtivos } from "./servicos.js";
 
 const titulos = {
     inicio: "Início",
     projetos: "Projetos",
-    cadastro: "Cadastro"
+    cadastro: "Cadastro",
+    monitoramento: "Monitoramento de preços"
 };
+
+let sequenciaRenderizacao = 0;
+
+async function dadosDaRota(rota) {
+    if (rota !== "inicio" && rota !== "projetos") return undefined;
+
+    try {
+        const projetos = await listarProjetosAtivos();
+        return projetos.length > 0 ? projetos : undefined;
+    } catch (erro) {
+        console.warn("Não foi possível carregar os projetos do Supabase; usando a cópia local.", erro);
+        return undefined;
+    }
+}
 
 function rotaAtual() {
     const rota = window.location.hash.replace("#", "").split("/")[0];
@@ -29,17 +47,26 @@ function interceptarNavegacao(evento) {
     window.location.hash = destino;
 }
 
-export function renderizarRota() {
+export async function renderizarRota({ gerenciarFoco = true } = {}) {
+    const renderizacao = ++sequenciaRenderizacao;
     const rota = rotaAtual();
     const app = document.querySelector("#app");
 
-    app.innerHTML = templates[rota]();
+    app.setAttribute("aria-busy", "true");
+    const dados = await dadosDaRota(rota);
+    if (renderizacao !== sequenciaRenderizacao) return;
+
+    app.innerHTML = templates[rota](dados);
     document.title = `${titulos[rota]} | Conexão Solidária`;
     atualizarNavegacao(rota);
     anunciarRota(titulos[rota]);
+    iniciarAutenticacao();
     iniciarFormulario();
-    app.focus({ preventScroll: true });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    iniciarMonitoramento();
+    app.setAttribute("aria-busy", "false");
+    if (gerenciarFoco) app.focus({ preventScroll: true });
+    const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduzirMovimento ? "auto" : "smooth" });
 }
 
 export function iniciarRoteador() {
@@ -49,6 +76,9 @@ export function iniciarRoteador() {
     }
 
     document.addEventListener("click", interceptarNavegacao);
-    window.addEventListener("hashchange", renderizarRota);
-    renderizarRota();
+    window.addEventListener("hashchange", () => {
+        const rota = window.location.hash.replace("#", "").split("/")[0];
+        if (Object.hasOwn(templates, rota)) renderizarRota();
+    });
+    renderizarRota({ gerenciarFoco: false });
 }

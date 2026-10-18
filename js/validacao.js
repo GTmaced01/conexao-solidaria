@@ -1,4 +1,7 @@
+import IMask from "imask";
 import { carregarRascunho, limparRascunho, salvarRascunho } from "./storage.js";
+import { salvarCadastroRemoto } from "./servicos.js";
+import { supabaseConfigurado } from "./supabase.js";
 
 const regras = {
     nome: {
@@ -29,19 +32,6 @@ function restaurarRascunho(formulario) {
         const campo = formulario.elements.namedItem(nome);
         if (campo) campo.value = valor;
     });
-}
-
-function aplicarMascaraTelefone(campo) {
-    const numeros = campo.value.replace(/\D/g, "").slice(0, 11);
-    const ddd = numeros.slice(0, 2);
-    const primeiraParte = numeros.slice(2, 7);
-    const segundaParte = numeros.slice(7, 11);
-
-    campo.value = [
-        ddd ? `(${ddd}${ddd.length === 2 ? ")" : ""}` : "",
-        primeiraParte ? ` ${primeiraParte}` : "",
-        segundaParte ? `-${segundaParte}` : ""
-    ].join("");
 }
 
 function obterFeedback(campo) {
@@ -87,7 +77,10 @@ function limparValidacao(formulario) {
         campo.classList.remove("is-valid", "is-invalid");
         campo.removeAttribute("aria-invalid");
     });
-    formulario.querySelectorAll(".field-feedback").forEach(feedback => feedback.remove());
+    formulario.querySelectorAll(".field-feedback").forEach(feedback => {
+        feedback.textContent = "";
+        feedback.className = "field-feedback";
+    });
 }
 
 export function iniciarFormulario() {
@@ -97,15 +90,14 @@ export function iniciarFormulario() {
     const status = formulario.querySelector("#form-status");
     restaurarRascunho(formulario);
     const campoTelefone = formulario.elements.namedItem("telefone");
-    const mascaraTelefone = typeof window.IMask === "function" && campoTelefone
-        ? window.IMask(campoTelefone, { mask: "(00) 00000-0000", lazy: true })
+    const mascaraTelefone = campoTelefone
+        ? IMask(campoTelefone, { mask: "(00) 00000-0000", lazy: true })
         : null;
 
     formulario.addEventListener("input", evento => {
         const campo = evento.target.closest("input, select");
         if (!campo) return;
 
-        if (campo.name === "telefone" && !mascaraTelefone) aplicarMascaraTelefone(campo);
         validarCampo(campo);
         salvarRascunho(dadosDoFormulario(formulario));
         status.textContent = "Rascunho salvo neste dispositivo.";
@@ -117,7 +109,7 @@ export function iniciarFormulario() {
         if (campo) validarCampo(campo);
     });
 
-    formulario.addEventListener("submit", evento => {
+    formulario.addEventListener("submit", async evento => {
         evento.preventDefault();
         const campos = [...formulario.querySelectorAll("[required]")];
         const formularioValido = campos.map(validarCampo).every(Boolean);
@@ -130,10 +122,30 @@ export function iniciarFormulario() {
             return;
         }
 
-        salvarRascunho(dadosDoFormulario(formulario));
-        status.textContent = "Cadastro validado e salvo localmente com sucesso.";
-        status.className = "form-status is-success";
-        formulario.classList.add("is-success");
+        if (!supabaseConfigurado) {
+            status.textContent = "A conexão segura ainda não foi configurada neste ambiente.";
+            status.className = "form-status is-error";
+            return;
+        }
+
+        const botaoEnviar = formulario.querySelector('button[type="submit"]');
+        botaoEnviar.disabled = true;
+        status.textContent = "Enviando cadastro com segurança...";
+        status.className = "form-status";
+
+        try {
+            await salvarCadastroRemoto(dadosDoFormulario(formulario));
+            limparRascunho();
+            status.textContent = "Cadastro enviado com sucesso. Entraremos em contato pelas próximas ações.";
+            status.className = "form-status is-success";
+            formulario.classList.add("is-success");
+        } catch (erro) {
+            status.textContent = erro instanceof Error ? erro.message : "Não foi possível enviar o cadastro.";
+            status.className = "form-status is-error";
+            formulario.classList.remove("is-success");
+        } finally {
+            botaoEnviar.disabled = false;
+        }
     });
 
     formulario.addEventListener("reset", () => {

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1500" viewBox="0 0 1400 1500">
+  <defs>
+    <marker id="seta" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#0b3954"/>
+    </marker>
+    <style>
+      .titulo{font:700 42px Arial,sans-serif;fill:#07283c}.sub{font:24px Arial,sans-serif;fill:#536571}
+      .texto{font:700 24px Arial,sans-serif;fill:#07283c;text-anchor:middle}.pequeno{font:20px Arial,sans-serif;fill:#07283c;text-anchor:middle}
+      .rotulo{font:700 18px Arial,sans-serif;fill:#056773}.linha{fill:none;stroke:#0b3954;stroke-width:5;marker-end:url(#seta)}
+      .processo{fill:#dff3f4;stroke:#056773;stroke-width:4}.decisao{fill:#fff4cc;stroke:#b57900;stroke-width:4}.terminal{fill:#0b3954;stroke:#07283c;stroke-width:4}.terminalTexto{font:700 24px Arial,sans-serif;fill:#fff;text-anchor:middle}
+    </style>
+  </defs>
+  <rect width="1400" height="1500" fill="#f3f7f8"/>
+  <text x="700" y="60" class="titulo" text-anchor="middle">Fluxograma — Monitoramento da cesta básica</text>
+  <text x="700" y="100" class="sub" text-anchor="middle">Algoritmo implementado no sistema Conexão Solidária</text>
+
+  <rect x="535" y="135" width="330" height="70" rx="35" class="terminal"/>
+  <text x="700" y="179" class="terminalTexto">INÍCIO</text>
+  <path d="M700 205 V250" class="linha"/>
+
+  <rect x="480" y="255" width="440" height="80" rx="16" class="processo"/>
+  <text x="700" y="287" class="texto">contador ← 1</text>
+  <text x="700" y="318" class="pequeno">Preparar análise de três produtos</text>
+  <path d="M700 335 V380" class="linha"/>
+
+  <rect x="390" y="385" width="620" height="100" rx="16" class="processo"/>
+  <text x="700" y="422" class="texto">Ler nome, preço anterior e preço atual</text>
+  <text x="700" y="458" class="pequeno">Entradas do produto atual</text>
+  <path d="M700 485 V530" class="linha"/>
+
+  <rect x="390" y="535" width="620" height="100" rx="16" class="processo"/>
+  <text x="700" y="572" class="texto">Calcular a variação percentual</text>
+  <text x="700" y="608" class="pequeno">((preço atual − preço anterior) / preço anterior) × 100</text>
+  <path d="M700 635 V675" class="linha"/>
+
+  <polygon points="700,680 910,770 700,860 490,770" class="decisao"/>
+  <text x="700" y="748" class="texto">Variação?</text>
+  <text x="700" y="782" class="pequeno">maior, menor ou igual a zero</text>
+
+  <path d="M490 770 H300 V890" class="linha"/>
+  <text x="330" y="750" class="rotulo">&gt; 0</text>
+  <rect x="150" y="895" width="300" height="70" rx="16" class="processo"/>
+  <text x="300" y="938" class="texto">AUMENTO</text>
+
+  <path d="M910 770 H1100 V890" class="linha"/>
+  <text x="1040" y="750" class="rotulo">&lt; 0</text>
+  <rect x="950" y="895" width="300" height="70" rx="16" class="processo"/>
+  <text x="1100" y="938" class="texto">QUEDA</text>
+
+  <path d="M700 860 V890" class="linha"/>
+  <text x="720" y="882" class="rotulo">= 0</text>
+  <rect x="550" y="895" width="300" height="70" rx="16" class="processo"/>
+  <text x="700" y="938" class="texto">ESTÁVEL</text>
+
+  <path d="M300 965 V1015 H535" class="linha"/>
+  <path d="M1100 965 V1015 H865" class="linha"/>
+  <path d="M700 965 V1000" class="linha"/>
+  <rect x="500" y="1005" width="400" height="80" rx="16" class="processo"/>
+  <text x="700" y="1038" class="texto">Exibir resultado</text>
+  <text x="700" y="1068" class="pequeno">nome, preços, variação e situação</text>
+  <path d="M700 1085 V1120" class="linha"/>
+
+  <rect x="500" y="1125" width="400" height="70" rx="16" class="processo"/>
+  <text x="700" y="1168" class="texto">contador ← contador + 1</text>
+  <path d="M700 1195 V1230" class="linha"/>
+
+  <polygon points="700,1235 890,1310 700,1385 510,1310" class="decisao"/>
+  <text x="700" y="1303" class="texto">contador ≤ 3?</text>
+  <path d="M510 1310 H95 V435 H380" class="linha"/>
+  <text x="430" y="1285" class="rotulo">SIM</text>
+  <path d="M700 1385 V1420" class="linha"/>
+  <text x="720" y="1410" class="rotulo">NÃO</text>
+  <rect x="535" y="1425" width="330" height="60" rx="30" class="terminal"/>
+  <text x="700" y="1463" class="terminalTexto">FIM</text>
+</svg>
