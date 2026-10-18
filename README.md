@@ -15,7 +15,10 @@ O projeto é uma cópia independente da Experiência III, preservando integralme
 - projetos renderizados por templates JavaScript reutilizáveis;
 - formulário com validação e mensagens em tempo real;
 - máscara progressiva de telefone incorporada ao pacote de produção;
-- persistência do rascunho no localStorage;
+- persistência local do rascunho durante o preenchimento;
+- autenticação sem senha por link enviado ao e-mail;
+- cadastro persistido no PostgreSQL do Supabase;
+- isolamento dos dados por usuário com Row Level Security (RLS);
 - menu responsivo para dispositivos móveis;
 - feedbacks acessíveis para mudanças de rota e validação;
 - modo escuro automático ou manual, com preferência persistida.
@@ -27,6 +30,7 @@ O projeto é uma cópia independente da Experiência III, preservando integralme
 - **CSS3:** design system, Grid, Flexbox, responsividade e estados visuais;
 - **JavaScript ES6:** módulos, DOM, eventos, templates, validação e roteamento;
 - **Web Storage API:** persistência local do formulário;
+- **Supabase:** autenticação, PostgreSQL, API de dados e políticas RLS;
 - **IMask 7.6.1:** máscara progressiva do telefone, incorporada ao pacote local;
 - **Vite 8:** servidor de desenvolvimento, empacotamento e geração da versão de produção;
 - **OXC e html-minifier-terser:** minificação de JavaScript, CSS e HTML;
@@ -83,6 +87,8 @@ Projeto - Conexao Solidaria/
 - conexão com a internet apenas na primeira instalação das dependências.
 
 ## Instalação e execução local
+
+Copie `.env.example` para `.env` e preencha somente `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`. Chaves secretas e `service_role` nunca pertencem ao navegador.
 
 ### Opção 1 — Windows
 
@@ -151,10 +157,20 @@ A aplicação utiliza HTML semântico, link de salto, navegação completa por t
 
 ## Limitações atuais
 
-- os dados permanecem apenas no navegador do utilizador;
-- não há autenticação ou integração com back-end;
 - o repositório remoto próprio ainda será criado;
-- o workflow de CI/CD será ativado quando o código for enviado ao repositório remoto e os segredos da Vercel forem cadastrados.
+- a migração e as variáveis de produção precisam ser aplicadas ao novo projeto Supabase;
+- o workflow de CI/CD será ativado quando o código for enviado ao repositório remoto e as variáveis públicas da Vercel forem cadastradas.
+
+## Banco de dados e segurança
+
+A pasta `supabase/` é a fonte da verdade do banco. A migração inicial cria perfis, projetos sociais e solicitações de colaboração, habilita RLS em todas as tabelas públicas e concede apenas os privilégios necessários aos papéis `anon` e `authenticated`.
+
+Comandos principais:
+
+- `npm run supabase:start`: inicia o ambiente local;
+- `npm run supabase:reset`: recria o banco a partir das migrações;
+- `npm run check:secrets`: impede o versionamento de segredos conhecidos;
+- `npm run check`: executa as verificações de segurança, contraste e produção.
 
 ## Documentação complementar
 
